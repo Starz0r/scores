@@ -32,35 +32,35 @@ func getScore(c echo.Context) error {
 }
 
 func getScoresFromBoard(c echo.Context) error {
-	t, err := strconv.ParseUint(c.Param("track"), 10, 64)
+	t, err := strconv.ParseUint(c.QueryParam("track"), 10, 64)
 	if err != nil {
 		logger.Error().
 			Err(err).
-			Msgf("Passed track parameter (%s) was not a valid number", c.Param("track"))
+			Msgf("Passed track parameter (%s) was not a valid number", c.QueryParam("track"))
 
 		return c.JSON(http.StatusBadRequest, nil)
 	}
-	b, err := strconv.ParseUint(c.Param("board"), 10, 64)
+	b, err := strconv.ParseUint(c.QueryParam("board"), 10, 64)
 	if err != nil {
 		logger.Error().
 			Err(err).
-			Msgf("Passed board parameter (%s) was not a valid number", c.Param("board"))
+			Msgf("Passed board parameter (%s) was not a valid number", c.QueryParam("board"))
 
 		return c.JSON(http.StatusBadRequest, nil)
 	}
-	l, err := strconv.Atoi(c.Param("limit"))
+	l, err := strconv.Atoi(c.QueryParam("limit"))
 	if err != nil {
 		logger.Error().
 			Err(err).
-			Msgf("Passed limit parameter (%s) was not a valid number", c.Param("limit"))
+			Msgf("Passed limit parameter (%s) was not a valid number", c.QueryParam("limit"))
 
 		return c.JSON(http.StatusBadRequest, nil)
 	}
-	o, err := strconv.Atoi(c.Param("offset"))
+	o, err := strconv.Atoi(c.QueryParam("offset"))
 	if err != nil {
 		logger.Error().
 			Err(err).
-			Msgf("Passed offset parameter (%s) was not a valid number", c.Param("offset"))
+			Msgf("Passed offset parameter (%s) was not a valid number", c.QueryParam("offset"))
 
 		return c.JSON(http.StatusBadRequest, nil)
 	}
