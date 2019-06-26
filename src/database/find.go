@@ -31,6 +31,7 @@ func SelectOrdinally(track, board uint64, limit int, offset int) ([]*Score, erro
 	}
 	var ss []*Score
 	scores := db.Collection("scores")
+	// TODO: use the pagination api instead of limit and offset
 	rs := scores.Find().
 		Where("track_id = ", track).
 		And("board_id = ", board).
