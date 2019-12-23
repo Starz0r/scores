@@ -10,6 +10,19 @@ import (
 )
 
 func deleteScore(c echo.Context) error {
+	// auth check
+	admin, auth := AuthorizationCheck(c)
+	if auth != true {
+		logger.Info().
+			Msg("user intent to create a delete a score, but was unauthorized.")
+
+		return c.JSON(http.StatusUnauthorized, &struct {
+			Message string
+		}{
+			Message: "Insufficient Permissions."})
+	}
+
+	// search for score
 	i, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
 		logger.Error().
@@ -22,6 +35,13 @@ func deleteScore(c echo.Context) error {
 			Message: "."})
 	}
 
+	// remove score
+	if !admin {
+		return c.JSON(http.StatusUnauthorized, &struct {
+			Message string
+		}{
+			Message: "Not an Administrator."})
+	}
 	err = database.Remove(i)
 	if err != nil {
 		logger.Error().
