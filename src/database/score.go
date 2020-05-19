@@ -15,7 +15,7 @@ type Score struct {
 	ScoreAmount       uint64    `db:"score_amount" json:"score,omitempty"`
 	MaxCombo          uint64    `db:"max_combo" json:"combo,omitempty"`
 	ClearStatus       int8      `db:"clear_status" json:"status,omitempty"`
-	EffectiveRate     uint8     `db:"effective_rate" json:"rate,omitempty"`
+	EffectiveRate     float32   `db:"effective_rate" json:"rate,omitempty"`
 	Accuracy          float64   `db:"accuracy" json:"accuracy,omitempty"`
 	Criticals         uint16    `db:"criticals" json:"criticals,omitempty"`
 	Nears             uint16    `db:"nears" json:"nears,omitempty"`
