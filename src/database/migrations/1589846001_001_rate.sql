@@ -1,0 +1,1 @@
+ALTER TABLE `scores` MODIFY `effective_rate` FLOAT UNSIGNED NOT NULL DEFAULT '0.0';
