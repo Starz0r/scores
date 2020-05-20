@@ -10,16 +10,16 @@ type Score struct {
 	BoardID           uint64    `db:"board_id" json:"board,omitempty"`
 	ProfileID         uint64    `db:"profile_id" json:"profile,omitempty"`
 	DateCreated       time.Time `db:"date_created" json:"date_created,omitempty"`
-	GradeLetter       uint8     `db:"grade_letter" json:"grade,omitempty"`
+	GradeLetter       string    `db:"grade_letter" json:"grade,omitempty"`
 	PerformanceRating uint32    `db:"performance_rating" json:"performance,omitempty"`
 	ScoreAmount       uint64    `db:"score_amount" json:"score,omitempty"`
 	MaxCombo          uint64    `db:"max_combo" json:"combo,omitempty"`
-	ClearStatus       int8      `db:"clear_status" json:"status,omitempty"`
+	ClearStatus       uint8     `db:"clear_status" json:"status,omitempty"`
 	EffectiveRate     float32   `db:"effective_rate" json:"rate,omitempty"`
 	Accuracy          float64   `db:"accuracy" json:"accuracy,omitempty"`
-	Criticals         uint16    `db:"criticals" json:"criticals,omitempty"`
-	Nears             uint16    `db:"nears" json:"nears,omitempty"`
-	Errors            uint16    `db:"errors" json:"errors,omitempty"`
-	Modifiers         string    `db:"modifiers" json:"mods,omitempty"`
+	Criticals         uint32    `db:"criticals" json:"criticals,omitempty"`
+	Nears             uint32    `db:"nears" json:"nears,omitempty"`
+	Errors            uint32    `db:"errors" json:"errors,omitempty"`
+	Modifiers         uint32    `db:"modifiers" json:"mods,omitempty"`
 	ReplayData        string    `db:"replaydata" json:"replay,omitempty"`
 }
