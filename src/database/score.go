@@ -21,5 +21,5 @@ type Score struct {
 	Nears             uint32    `db:"nears" json:"nears,omitempty"`
 	Errors            uint32    `db:"errors" json:"errors,omitempty"`
 	Modifiers         uint32    `db:"modifiers" json:"mods,omitempty"`
-	ReplayData        string    `db:"replaydata" json:"replay,omitempty"`
+	ReplayData        string    `db:"replay_data" json:"replay,omitempty"`
 }
