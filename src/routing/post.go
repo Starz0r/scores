@@ -18,9 +18,23 @@ func createScore(c echo.Context) error {
 		}{
 			Message: ErrPermissions.Error()})
 	}
+	claims := SelfAuthCheck(c) //TODO: log a wtf is this is nil
+	err, pf := database.SelectProfileByUUID(claims.Subject)
+	if err != nil {
+		logger.Warn().
+			Err(err).
+			Msg("user profile could not be found")
+
+		return c.JSON(http.StatusUnauthorized, &struct {
+			Message string
+		}{
+			Message: ErrPermissions.Error()})
 	}
 
+	// Data Binding
+
 	s := new(database.Score)
+	s.ProfileID = pf.ID
 	if err := c.Bind(s); err != nil {
 		logger.Error().
 			Err(err).
