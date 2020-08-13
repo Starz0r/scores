@@ -52,3 +52,21 @@ func SelectOrdinally(track, board uint64, limit int, offset int) ([]*Score, erro
 		return ss, nil
 	}
 }
+
+func SelectProfileByUUID(uuid string) (error, *Profile) {
+	pf := *new(Profile)
+	err := db.SelectFrom("profiles").
+		Where("uuid = " + uuid).
+		Limit(1).
+		One(&pf)
+	if err != nil {
+		logger.Error().
+			Err(err).
+			Msg("SQL Execution had an issue when executing.")
+		return err, nil
+	}
+
+	// pf.UUID = *new(string) // QUEST: Should I clear this field so it doesn't return?
+
+	return nil, &pf
+}
