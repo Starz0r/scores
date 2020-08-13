@@ -47,6 +47,20 @@ func createScore(c echo.Context) error {
 	}
 
 	err := s.New()
+	// Get Related Board
+
+	b, err := database.BoardGetFromIDs(s.TrackID, s.BoardID)
+	if err != nil {
+		logger.Error().
+			Err(err).
+			Msg("Score submission request missing track and board IDs")
+
+		return c.JSON(http.StatusNotAcceptable, &struct {
+			Message string
+		}{
+			Message: "Score data was invalid or malformed."})
+	}
+
 	if err != nil {
 		return c.JSON(http.StatusNotAcceptable, &struct {
 			Message string
