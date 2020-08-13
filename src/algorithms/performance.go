@@ -1,6 +1,9 @@
 package algorithms
 
-func CalculateVolforce(level uint, score uint, grade string, medal uint8) float32 {
+func CalculateVolforce(level uint8,
+	score uint32,
+	grade string,
+	medal uint8) float32 {
 	gradeBonus := *new(float32)
 	medalBonus := *new(float32)
 
@@ -30,5 +33,5 @@ func CalculateVolforce(level uint, score uint, grade string, medal uint8) float3
 		medalBonus = 0.50
 	}
 
-	return (float32((level * 2)) * float32((score / 10000000)) * gradeBonus * medalBonus)
+	return (float32((level * 2)) * float32((float32(score) / float32(10000000))) * gradeBonus * medalBonus)
 }
