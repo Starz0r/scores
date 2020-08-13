@@ -9,11 +9,15 @@ import (
 )
 
 func createScore(c echo.Context) error {
-	if err := FullAuthCheck(c); err != nil {
+	if authorized := HasRole(c, "create-score"); authorized != true {
 		logger.Info().
-			Msg("user intent to create a new score, but was unauthorized.")
+			Msg("user intent to submit a score, but was unauthorized.")
 
-		return err
+		return c.JSON(http.StatusUnauthorized, &struct {
+			Message string
+		}{
+			Message: ErrPermissions.Error()})
+	}
 	}
 
 	s := new(database.Score)
