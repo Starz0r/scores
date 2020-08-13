@@ -11,8 +11,8 @@ import (
 
 func deleteScore(c echo.Context) error {
 	// auth check
-	admin, auth := AuthorizationCheck(c)
-	if auth != true {
+	admin := HasRole(c, "manage-scores")
+	if admin != true {
 		logger.Info().
 			Msg("user intent to create a delete a score, but was unauthorized.")
 
@@ -36,12 +36,6 @@ func deleteScore(c echo.Context) error {
 	}
 
 	// remove score
-	if !admin {
-		return c.JSON(http.StatusUnauthorized, &struct {
-			Message string
-		}{
-			Message: "Not an Administrator."})
-	}
 	err = database.Remove(i)
 	if err != nil {
 		logger.Error().
