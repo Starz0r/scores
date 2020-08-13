@@ -3,6 +3,7 @@ package routing
 import (
 	"net/http"
 
+	"github.com/orchestrafm/scores/src/algorithms"
 	"github.com/orchestrafm/scores/src/database"
 	"github.com/spidernest-go/logger"
 	"github.com/spidernest-go/mux"
@@ -46,7 +47,6 @@ func createScore(c echo.Context) error {
 			Message: "Score data was invalid or malformed."})
 	}
 
-	err := s.New()
 	// Get Related Board
 
 	b, err := database.BoardGetFromIDs(s.TrackID, s.BoardID)
@@ -61,6 +61,23 @@ func createScore(c echo.Context) error {
 			Message: "Score data was invalid or malformed."})
 	}
 
+	// Calculate Scoring & Grading
+
+	s.GradeLetter = algorithms.CalculateGrade(s.ScoreAmount)
+	s.ClearStatus = algorithms.CalculateMedal(s.ScoreAmount,
+		uint64(s.Errors),
+		s.EffectiveRate,
+		s.Modifiers)
+	s.Accuracy = algorithms.CalculateAccuracy(s.Criticals, s.Nears, s.Errors, 0)
+	s.PerformanceRating = algorithms.CalculateVolforce(b.DifficultyRating,
+		s.ScoreAmount,
+		s.GradeLetter,
+		s.ClearStatus)
+	s.Experience = 2 // TODO: Actually calculate this
+
+	// Submit Score
+
+	err = s.New()
 	if err != nil {
 		return c.JSON(http.StatusNotAcceptable, &struct {
 			Message string
@@ -68,8 +85,5 @@ func createScore(c echo.Context) error {
 			Message: "Score data did not get submitted to the database."})
 	}
 
-	return c.JSON(http.StatusOK, &struct {
-		Message string
-	}{
-		Message: "OK."})
+	return c.JSON(http.StatusOK, s)
 }
