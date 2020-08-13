@@ -11,8 +11,8 @@ type Score struct {
 	ProfileID         uint64    `db:"profile_id" json:"profile,omitempty"`
 	DateCreated       time.Time `db:"date_created" json:"date_created,omitempty"`
 	GradeLetter       string    `db:"grade_letter" json:"grade,omitempty"`
-	PerformanceRating uint32    `db:"performance_rating" json:"performance,omitempty"`
-	ScoreAmount       uint64    `db:"score_amount" json:"score,omitempty"`
+	PerformanceRating float32   `db:"performance_rating" json:"performance,omitempty"`
+	ScoreAmount       uint32    `db:"score_amount" json:"score,omitempty"`
 	MaxCombo          uint64    `db:"max_combo" json:"combo,omitempty"`
 	ClearStatus       uint8     `db:"clear_status" json:"status,omitempty"`
 	EffectiveRate     float32   `db:"effective_rate" json:"rate,omitempty"`
@@ -21,5 +21,6 @@ type Score struct {
 	Nears             uint32    `db:"nears" json:"nears,omitempty"`
 	Errors            uint32    `db:"errors" json:"errors,omitempty"`
 	Modifiers         uint32    `db:"modifiers" json:"mods,omitempty"`
+	Experience        uint16    `json:"xp,omitempty"`
 	ReplayData        string    `db:"replay_data" json:"replay,omitempty"`
 }
