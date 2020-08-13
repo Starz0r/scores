@@ -1,6 +1,6 @@
 package algorithms
 
-func CalculateGrade(score uint64) string {
+func CalculateGrade(score uint32) string {
 	switch {
 	case score >= 9900000:
 		return "S"

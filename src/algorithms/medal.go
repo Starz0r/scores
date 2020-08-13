@@ -6,7 +6,7 @@ const (
 	gameFlagHard        = 0x1
 )
 
-func CalculateMedal(score uint64, errors uint64, gauge float32, flags uint32) uint8 {
+func CalculateMedal(score uint32, errors uint64, gauge float32, flags uint32) uint8 {
 	switch {
 	case score == 10000000: // Perfect
 		return 5
