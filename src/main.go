@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/orchestrafm/scores/src/database"
-	"github.com/orchestrafm/scores/src/routing"
+	"github.com/orchestrafm/scores/src/routers"
 	"github.com/spidernest-go/logger"
 )
 
@@ -13,5 +13,5 @@ func main() {
 		Msg("MySQL Database could not be attached to.")
 	database.Synchronize()
 
-	routing.ListenAndServe()
+	routers.ListenAndServe()
 }
