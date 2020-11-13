@@ -5,6 +5,7 @@ import (
 	"errors"
 	"time"
 
+	orm "github.com/spidernest-go/db"
 	"github.com/spidernest-go/logger"
 )
 
@@ -14,28 +15,18 @@ func (s *Score) New() error {
 	// check for a previous score by the same profile
 	scores := db.Collection("scores")
 	prevscore := *new(Score)
-	err := scores.Find().
+	res := scores.Find().
 		Where("track_id = ", s.TrackID).
 		And("board_id = ", s.BoardID).
-		And("profile_id = ", s.ProfileID).
-		One(&prevscore)
+		And("profile_id = ", s.ProfileID)
 
-		// update the score if the performance rating is higher
-	if err == sql.ErrNoRows {
+	err := res.One(&prevscore)
+
+	// update the score if the performance rating is higher
+	if err == nil {
 		if s.PerformanceRating > prevscore.PerformanceRating {
 			s.ID = prevscore.ID
-			stmt, err := db.Update("scores").
-				Set(s).
-				Prepare()
-			if err != nil {
-				logger.Error().
-					Err(err).
-					Msg("SQL Statement on score update couldn't be prepared.")
-
-				return err
-			}
-
-			_, err = stmt.Exec()
+			err = res.Update(s)
 			if err != nil {
 				logger.Error().
 					Err(err).
@@ -46,7 +37,7 @@ func (s *Score) New() error {
 		} else {
 			return ErrUnderperformed
 		}
-	} else if err != nil && err != sql.ErrNoRows {
+	} else if err != nil && err != sql.ErrNoRows && err != orm.ErrNoMoreRows {
 		logger.Error().
 			Err(err).
 			Msg("Bad parameters or database error.")
