@@ -1,5 +1,7 @@
 module github.com/orchestrafm/scores
 
+go 1.12.17
+
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-sql-driver/mysql v1.4.1
@@ -12,6 +14,6 @@ require (
 	github.com/spidernest-go/db v0.0.0-20190526235030-072cabf93805
 	github.com/spidernest-go/logger v0.0.0-20191128190838-520d89ea00af
 	github.com/spidernest-go/migrate v0.0.0-20190604214622-8fccd3022231
-	github.com/spidernest-go/mux v0.0.0-20200202234537-1b58c269dc0a
 	github.com/valyala/fasthttp v1.8.0 // indirect
+	github.com/spidernest-go/mux v0.0.0-20201128044825-fb21d0a8ad81
 )
